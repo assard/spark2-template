@@ -9,7 +9,8 @@ object Main {
     println(s"Spark Version: $sparkVersion")
 
 //    sql_practice.examples.exec1()
-    sql_practice.examples.exec2()
+//    sql_practice.examples.exec2()
+    sql_practice.examples.exec3()
   }
 
 }

@@ -63,4 +63,20 @@ object examples {
     println("What are the top highly populated departments in France ? (Use join to display the name)")
     resultDf.groupBy($"_1",$"Departement").agg(sum($"Population")).sort(sum($"Population").desc).show()
   }
+
+  def exec3(): Unit ={
+    val spark = SessionBuilder.buildSession()
+    import spark.implicits._
+
+    val toursDF = spark.read
+      .option("multiline", true)
+      .option("mode", "PERMISSIVE")
+      .json("data/input/tours.json")
+    toursDF.printSchema()
+    toursDF.show()
+
+    //1. How many unique levels of difficulties ?
+    toursDF.groupBy($"tourDifficulty").count().show()
+
+  }
 }
