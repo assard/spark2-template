@@ -86,5 +86,9 @@ object examples {
     //3. What is the min/max/avg of price for each level of difficultiy ?
     println("3. What is the min/max/avg of price for each level of difficultiy ?")
     toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice")).show()
+
+    //4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of difficulty ?
+    println("4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of difficulty ?")
+    toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice"),min($"tourLength"),max($"tourLength"),avg($"tourLength")).show()
   }
 }
