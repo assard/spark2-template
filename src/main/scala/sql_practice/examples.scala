@@ -35,4 +35,32 @@ object examples {
 
 
   }
+
+  def exec2(): Unit ={
+    val spark = SessionBuilder.buildSession()
+    import spark.implicits._
+
+    val people = spark.read.json("data/input/demographie_par_commune.json")
+
+    //How many people have France ?
+    println("How many people have France ?")
+    people.select(sum($"population")).show()
+
+    //What are the top highly populated departments in France ? (Just a code name)
+    println("What are the top highly populated departments in France ? (Just a code name)")
+    people.groupBy($"Departement").agg(sum($"Population")).sort(sum($"Population").desc).show()
+
+    val dep = spark.read.text("data/input/departements.txt")
+
+    val dep2 = dep.map(f=>{
+      val elements = f.getString(0).split(",")
+      (elements(0),elements(1))
+    })
+
+    val resultDf = people.join(broadcast(dep2),people("departement") <=> dep2("_2"))
+
+    //What are the top highly populated departments in France ? (Use join to display the name)
+    println("What are the top highly populated departments in France ? (Use join to display the name)")
+    resultDf.groupBy($"_1",$"Departement").agg(sum($"Population")).sort(sum($"Population").desc).show()
+  }
 }
