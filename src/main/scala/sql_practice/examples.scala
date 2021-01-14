@@ -76,7 +76,11 @@ object examples {
     toursDF.show()
 
     //1. How many unique levels of difficulties ?
+    println("1. How many unique levels of difficulties ?")
     toursDF.groupBy($"tourDifficulty").count().show()
 
+    //2. What is the min/max/avg of tour prices ?
+    println("2. What is the min/max/avg of tour prices ?")
+    toursDF.agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice")).show()
   }
 }
