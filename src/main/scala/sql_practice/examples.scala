@@ -85,22 +85,32 @@ object examples {
 
     //3. What is the min/max/avg of price for each level of difficultiy ?
     println("3. What is the min/max/avg of price for each level of difficultiy ?")
-    toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice")).show()
+    toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice"))
+      .show()
 
-    //4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of difficulty ?
-    println("4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of difficulty ?")
-    toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice"),min($"tourLength"),max($"tourLength"),avg($"tourLength")).show()
+    //4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of
+    // difficulty ?
+    println("4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of" +
+      " difficulty ?")
+    toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice")
+      ,min($"tourLength"),max($"tourLength"),avg($"tourLength")).show()
 
     //5. Display the top 10 "tourTags" (use explode)
     println("Display the top 10 \"tourTags\" (use explode)")
-    toursDF.select($"tourName",explode($"tourTags")).groupBy($"col").count().sort(desc("count")).limit(10).show()
+    toursDF.select($"tourName",explode($"tourTags")).groupBy($"col").count()
+      .sort(desc("count")).limit(10).show()
 
     //6. Relationship between top 10 "tourTags" and "tourDifficulty"
     println("6. Relationship between top 10 \"tourTags\" and \"tourDifficulty\"")
-    toursDF.select($"tourDifficulty",explode($"tourTags")).groupBy($"col",$"tourDifficulty").count().sort(desc("count")).limit(10).show()
+    toursDF.select($"tourDifficulty",explode($"tourTags")).groupBy($"col",$"tourDifficulty")
+      .count().sort(desc("count")).limit(10).show()
 
-    //7. What is the min/max/avg of price in "tourTags" and "tourDifficulty" relationship ? (sort by average)
-    println("7. What is the min/max/avg of price in \"tourTags\" and \"tourDifficulty\" relationship ? (sort by average)")
-    toursDF.select($"tourDifficulty",explode($"tourTags"),$"tourPrice").groupBy($"col",$"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice")).sort(avg($"tourPrice").desc).show()
+    //7. What is the min/max/avg of price in "tourTags" and "tourDifficulty" relationship ?
+    // (sort by average)
+    println("7. What is the min/max/avg of price in \"tourTags\" and \"tourDifficulty\" relationship ?" +
+      " (sort by average)")
+    toursDF.select($"tourDifficulty",explode($"tourTags"),$"tourPrice")
+      .groupBy($"col",$"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice"))
+      .sort(avg($"tourPrice").desc).show()
   }
 }
