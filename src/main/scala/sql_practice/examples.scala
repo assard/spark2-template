@@ -90,5 +90,9 @@ object examples {
     //4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of difficulty ?
     println("4. What is the min/max/avg of price and min/max/avg of duration (length) for each level of difficulty ?")
     toursDF.groupBy($"tourDifficulty").agg(min($"tourPrice"),max($"tourPrice"),avg($"tourPrice"),min($"tourLength"),max($"tourLength"),avg($"tourLength")).show()
+
+    //5. Display the top 10 "tourTags" (use explode)
+    println("Display the top 10 \"tourTags\" (use explode)")
+    toursDF.select($"tourName",explode($"tourTags")).groupBy($"col").count().sort(desc("count")).limit(10).show()
   }
 }
