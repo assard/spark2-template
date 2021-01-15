@@ -94,5 +94,10 @@ object examples {
     //5. Display the top 10 "tourTags" (use explode)
     println("Display the top 10 \"tourTags\" (use explode)")
     toursDF.select($"tourName",explode($"tourTags")).groupBy($"col").count().sort(desc("count")).limit(10).show()
+
+    //6. Relationship between top 10 "tourTags" and "tourDifficulty"
+    println("6. Relationship between top 10 \"tourTags\" and \"tourDifficulty\"")
+    toursDF.select($"tourDifficulty",explode($"tourTags")).groupBy($"col",$"tourDifficulty").count().sort(desc("count")).limit(10).show()
+
   }
 }
